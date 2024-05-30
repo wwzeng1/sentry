@@ -53,14 +53,6 @@ jobs:
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      - name: Internal github app token
-        id: token
-        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc # v3.0.0
-        continue-on-error: true
-        with:
-          app_id: ${{ vars.SENTRY_INTERNAL_APP_ID }}
-          private_key: ${{ secrets.SENTRY_INTERNAL_APP_PRIVATE_KEY }}
-
       - uses: getsentry/action-setup-volta@e4939d337b83760d13a9d7030a6f68c9d0ee7581 # v2.0.0
 
       - name: Install dependencies
@@ -182,19 +174,6 @@ jobs:
           DEBUG_PRINT_LIMIT: 0
         run: |
           JEST_TESTS=$(yarn -s jest --listTests --json) yarn test-ci --forceExit
-
-      # We only upload coverage data for FE changes since it conflicts with
-      # codecov's carry forward functionality.
-      # Upload coverage data even if running the tests step fails since
-      # it reduces large coverage fluctuations.
-      - name: Handle artifacts
-        uses: ./.github/actions/artifacts
-        if: always()
-        with:
-          files: .artifacts/coverage/*
-          type: frontend
-          token: ${{ secrets.CODECOV_TOKEN }}
-          commit_sha: ${{ github.event.pull_request.head.sha }}
 
   # This check runs once all dependant jobs have passed
   # It symbolizes that all required Frontend checks have succesfully passed (Or skipped)
