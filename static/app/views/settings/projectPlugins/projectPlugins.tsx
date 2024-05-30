@@ -19,7 +19,7 @@ import ProjectPluginRow from './projectPluginRow';
 
 type Props = {
   error: React.ComponentProps<typeof RouteError>['error'];
-  loading: boolean;
+  loading: boolean; 
   onChange: React.ComponentProps<typeof ProjectPluginRow>['onChange'];
   organization: Organization;
   plugins: Plugin[];
