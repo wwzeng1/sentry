@@ -15,7 +15,7 @@ import type {Organization} from 'sentry/types/organization';
 import type {Project} from 'sentry/types/project';
 import RouteError from 'sentry/views/routeError';
 
-
+import ProjectPluginRow from './projectPluginRow';
 
 type Props = {
   error: React.ComponentProps<typeof RouteError>['error'];
