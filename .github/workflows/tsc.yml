@@ -1,0 +1,26 @@
+name: TypeScript Compilation
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  typescript-compile:
+    name: TypeScript Compilation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run TypeScript compilation
+        run: yarn tsc
